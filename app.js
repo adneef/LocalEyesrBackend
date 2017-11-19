@@ -24,7 +24,6 @@ app.use(function(req, res, next) {
 
 /* ----------------- end CORS fix ------------------*/
 
-
 app.use(cookieSession({
   name: 'bologna',
   keys: [`${process.env.COOKIE_KEY}`],
