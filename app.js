@@ -60,6 +60,8 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 }))
 
 app.get('/auth/google/success', (req, res) => {
+  console.log('req.user:', req.user)
+  console.log('req.cookies:', req.cookies)
   res.send("successfully logged in")
 })
 
