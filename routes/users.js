@@ -42,8 +42,7 @@ router.get('/:id', (req, res, next) => {
 
 // POST a new search term to the db
 router.post('/', (req, res, next) => {
-  //may need user.id also
-  //will definitely need a user.id from somewhere.  How to pass?  URL seems the easiest, or state?
+  let id = req.user.id
   const { term } = req.body
 
   if(!term || !term.trim()) {
