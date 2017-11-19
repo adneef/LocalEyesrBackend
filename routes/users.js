@@ -19,7 +19,8 @@ router.get('/', function(req, res, next) {
 // GET a specific user's searches and id
 router.get('/:id', (req, res, next) => {
 
-  let id = Number(req.params.id)
+  // let id = Number(req.params.id)
+  let id = req.user
 
   if(Number.isNaN(id)) {
     res.sendStatus(400)

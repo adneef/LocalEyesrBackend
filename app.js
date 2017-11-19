@@ -70,8 +70,9 @@ app.get('/auth/google/failure', (req, res) => {
 })
 
 app.get('/auth/logout', (req, res) => {
-  	req.logOut()
-    res.send('successfully logged out')
+  console.log('hit the logout route')
+  req.logOut()
+  res.send('successfully logged out')
 })
 
 /*--------------------------- auth routes end -------------------------- */
