@@ -30,23 +30,21 @@ passport.use(new GoogleStrategy({
       //then set dbUser equal to that newUser
       .then((newUser) => {
         dbUser.id = newUser
-        console.log('New User', dbUser)
+        console.log('New User is:', dbUser)
       })
       //if user does exist, then set dbuser equal to that user
     } else {
-      dbUser = user
-      console.log('User definitely exists,', dbUser)
+      dbUser.id = user.id
+      console.log('set dbUser to equal existing user,', dbUser.id)
     }
+  }).then(() => {
+    return done(null, dbUser)
   })
-
-  // I have some concern that all you need to do to bypass this step is to pass an object, but have little way to test at the moment.  If problems are being caused, then we'll deal with them as they come up.
-  return done(null, { user: 1 })
-  // return done(null, {accessToken, profile})
 }))
 
 // take in whatever was passed into `done` inside the GitHubStrategy config
 passport.serializeUser((user, done) => {
-  console.log("\n\nSerialize User dbuser:", user)
+  console.log("\n\nSerialize User:", user)
   // when I call `done` _here_, I am passing in the data to be saved to the session
   done(null, user)
 })
