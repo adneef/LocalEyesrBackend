@@ -43,8 +43,8 @@ router.get('/:id', (req, res, next) => {
 
 // POST a new search term to the db
 router.post('/', (req, res, next) => {
-  let id = req.user.id
-  const { term } = req.body
+
+  const { term, id } = req.body
 
   if(!term || !term.trim()) {
     res.sendStatus(400)
@@ -52,14 +52,14 @@ router.post('/', (req, res, next) => {
   }
 
   knex('searches')
-  .insert( {term: term})
-  .where('user.id', id)
-  .then((row) => {
-    if(!row) {
+  .returning('term')
+  .insert( {term: term, user_id: id})
+  .then((newTerm) => {
+    if(!newTerm) {
       res.sendStatus(404)
       return
     }
-    res.sendStatus(200)
+    res.send(newTerm)
   })
 })
 
