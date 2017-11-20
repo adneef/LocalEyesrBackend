@@ -44,13 +44,13 @@ passport.use(new GoogleStrategy({
 
 // take in whatever was passed into `done` inside the GitHubStrategy config
 passport.serializeUser((user, done) => {
-  // console.log("\n\nSerialize User:", user)
+  console.log("\n\nSerialize User:", user)
   // when I call `done` _here_, I am passing in the data to be saved to the session
   done(null, user)
 })
 
 passport.deserializeUser((user, done) => {
-  // console.log("Deserialize User", user)
+  console.log("Deserialize User", user)
   done(null, user)
 })
 
