@@ -78,9 +78,14 @@ router.get('/related', function(req, res, next) {
       }
       return acc;
     }, {});
+    const dataArray = []
+          for (var k in hashtagWithCount) {
+            let hashObj = {hash: k, count: hashtagWithCount[k]}
+            dataArray.push(hashObj)
+          }
 
-    console.log(hashtagWithCount);
-    res.send(hashtagWithCount)
+    console.log(dataArray);
+    res.send(dataArray)
   }
 
 
