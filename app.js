@@ -9,6 +9,7 @@ require('dotenv').config()
 
 const index = require('./routes/index')
 const users = require('./routes/users')
+const twitter = require('./routes/twitter')
 const passport = require('./services/passport')
 
 const app = express()
@@ -49,6 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', index)
 app.use('/users', users)
+app.use('/twitter', twitter)
 
 /*--------------------------- auth routes -------------------------- */
 
