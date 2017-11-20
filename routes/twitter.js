@@ -47,8 +47,9 @@ router.get('/trends', function(req, res, next) {
 // get related hashtags from client search request
 router.get('/related', function(req, res, next) {
   console.log('hello from related routes');
+  console.log('req from front end: ', req.body);
   // console.log('req from related: ', req);
-  t.get('search/tweets', { q: 'sunday', count: 200 }, gotData)
+  t.get('search/tweets', { q: 'monday', count: 200 }, gotData)
 
   // filter data from twitter API call
   function gotData(err, data, response) {
