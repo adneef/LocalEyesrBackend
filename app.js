@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const cookieSession = require('cookie-session')
 require('dotenv').config()
+const front = process.env.FRONT_END
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -65,7 +66,7 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 app.get('/auth/google/success', (req, res) => {
   console.log('req.user:', req.user)
   console.log('req.session:', req.session)
-  res.redirect(`http://localhost:3000/${req.session.passport.user.id}`)
+  res.redirect(`${front}/${req.session.passport.user.id}`)
   // res.redirect('http://localhost:3000')
   // res.send(req.session.passport.user)
 })
