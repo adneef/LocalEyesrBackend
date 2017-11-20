@@ -63,8 +63,9 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 app.get('/auth/google/success', (req, res) => {
   console.log('req.user:', req.user)
   console.log('req.session:', req.session)
-  // res.redirect('/users')
-  res.send(req.session.passport.user)
+  res.redirect(`http://localhost:3000/${req.session.passport.user.id}`)
+  // res.redirect('http://localhost:3000')
+  // res.send(req.session.passport.user)
 })
 
 app.get('/auth/google/failure', (req, res) => {
