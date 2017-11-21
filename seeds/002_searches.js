@@ -13,6 +13,16 @@ exports.seed = function(knex, Promise) {
         id: 2,
         term: 'bologna',
         user_id: 1
+        },
+        {
+        id: 3,
+        term: 'burrito',
+        user_id: 2
+        },
+        {
+        id: 4,
+        term: 'cheese',
+        user_id: 2
         }
       ])
     })

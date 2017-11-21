@@ -30,7 +30,7 @@ router.get('/:id', (req, res, next) => {
   knex('users')
   .select('users.id', 'term')
   .where('searches.user_id', id)
-  .orderBy('searches.created_at', 'desc')
+  .orderBy('searches.created_at', 'asc')
   .innerJoin('searches', 'searches.user_id', 'users.id')
   .then((user) => {
     if(!user) {

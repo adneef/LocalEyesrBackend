@@ -8,6 +8,10 @@ exports.seed = function(knex, Promise) {
           id: 1,
           google_id: '7'
         },
+        {
+        id: 2,
+        google_id: '42'
+        }
       ])
     })
   .then(() => {
