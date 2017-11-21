@@ -164,28 +164,29 @@ router.get('/boulder', function(req, res, next) {
 })
 
 // most recent tweets for top trend
-router.get('/tweets', function(req, res, next) {
-  t.get('search/tweets', { q: `${req.query.term}`, count: 5 }, gotData)
-  // filter data from twitter API call
-  function gotData(err, data, response) {
-    let filteredTweets = data.statuses.slice(1, 5).map(item => {
-      if (item.entities.hashtags.length === 0) {
-        return {
-          created_at: item.created_at,
-          text: item.text,
-          hashtags: 'none'
-        }
-      }
-      let hashtags = item.entities.hashtags[0].text
-      return {
-        created_at: item.created_at,
-        text: item.text,
-        hashtags: hashtags
-      }
-    })
-    return res.send(filteredTweets)
-  }
-})
+// router.get('/tweets', function(req, res, next) {
+//   console.log('query term', req.query.term);
+//   t.get('search/tweets', { q: `${req.query.term}`, count: 5 }, gotData)
+//   // filter data from twitter API call
+//   function gotData(err, data, response) {
+//     let filteredTweets = data.statuses.slice(1, 5).map(item => {
+//       if (item.entities.hashtags.length === 0) {
+//         return {
+//           created_at: item.created_at,
+//           text: item.text,
+//           hashtags: 'none'
+//         }
+//       }
+//       let hashtags = item.entities.hashtags[0].text
+//       return {
+//         created_at: item.created_at,
+//         text: item.text,
+//         hashtags: hashtags
+//       }
+//     })
+//     return res.send(filteredTweets)
+//   }
+// })
 
 
 module.exports = router;
