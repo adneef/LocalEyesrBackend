@@ -1,11 +1,12 @@
 const express = require('express')
 const path = require('path')
-const favicon = require('serve-favicon')
+// const favicon = require('serve-favicon')
 const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const cookieSession = require('cookie-session')
 require('dotenv').config()
+const front = process.env.FRONT_END
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -18,7 +19,7 @@ const app = express()
 /* ------------------ We need them now ---------------------------*/
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,POST,DELETE,PATCH,PUT");
+  res.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PATCH, PUT");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
@@ -57,14 +58,17 @@ app.use('/twitter', twitter)
 app.get('/auth/google', passport.authenticate('google', {scope: ['profile']}))
 
 app.get('/auth/google/callback', passport.authenticate('google', {
+
   successRedirect: '/auth/google/success',
   failureRedirect: '/auth/google/failure'
 }))
 
 app.get('/auth/google/success', (req, res) => {
   console.log('req.user:', req.user)
-  console.log('req.cookies:', req.cookies)
-  res.send("successfully logged in")
+  console.log('req.session:', req.session)
+  res.redirect(`${front}/${req.session.passport.user.id}`)
+  // res.redirect('http://localhost:3000')
+  // res.send(req.session.passport.user)
 })
 
 app.get('/auth/google/failure', (req, res) => {
@@ -72,8 +76,9 @@ app.get('/auth/google/failure', (req, res) => {
 })
 
 app.get('/auth/logout', (req, res) => {
-  	req.logOut()
-    res.send('successfully logged out')
+  console.log('hit the logout route')
+  req.logOut()
+  res.send('successfully logged out')
 })
 
 /*--------------------------- auth routes end -------------------------- */
