@@ -76,6 +76,7 @@ app.get('/auth/google/failure', (req, res) => {
 app.get('/auth/logout', (req, res) => {
   console.log('hit the logout route')
   req.logOut()
+  req.session = null
   res.redirect(`${front}/`)
   // res.send('successfully logged out')
 })
