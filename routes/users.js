@@ -37,7 +37,6 @@ router.get('/:id', (req, res, next) => {
       res.sendStatus(404)
       return
     }
-    
     res.send(user)
   })
 })
