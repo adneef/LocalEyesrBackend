@@ -88,7 +88,7 @@ router.get('/related', function(req, res, next) {
 
 // most recent tweets about denver
 router.get('/denver', function(req, res, next) {
-  t.get('search/tweets', { q: 'Denver', count: 200 }, gotData)
+  t.get('search/tweets', { q: 'Denver', count: 5 }, gotData)
   // filter data from twitter API call
   function gotData(err, data, response) {
     let filteredDenver = data.statuses.slice(1, 5).map(item => {
@@ -114,7 +114,7 @@ router.get('/denver', function(req, res, next) {
 
 // most recent tweets about co spring
 router.get('/springs', function(req, res, next) {
-  t.get('search/tweets', { q: 'Colorado Springs', count: 200 }, gotData)
+  t.get('search/tweets', { q: 'Colorado Springs', count: 5 }, gotData)
   // filter data from twitter API call
   function gotData(err, data, response) {
     let filteredSprings = data.statuses.slice(1, 5).map(item => {
@@ -140,7 +140,7 @@ router.get('/springs', function(req, res, next) {
 
 // most recent tweets about boulder
 router.get('/boulder', function(req, res, next) {
-  t.get('search/tweets', { q: 'Boulder, CO', count: 200 }, gotData)
+  t.get('search/tweets', { q: 'Boulder, CO', count: 5 }, gotData)
   // filter data from twitter API call
   function gotData(err, data, response) {
     let filteredBoulder = data.statuses.slice(1, 5).map(item => {
@@ -165,7 +165,7 @@ router.get('/boulder', function(req, res, next) {
 
 // most recent tweets for top trend
 router.get('/tweets', function(req, res, next) {
-  t.get('search/tweets', { q: `${req.query.term}`, count: 200 }, gotData)
+  t.get('search/tweets', { q: `${req.query.term}`, count: 5 }, gotData)
   // filter data from twitter API call
   function gotData(err, data, response) {
     let filteredTweets = data.statuses.slice(1, 5).map(item => {
