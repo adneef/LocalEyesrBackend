@@ -39,8 +39,9 @@ router.get('/trends', function(req, res, next) {
       }
     }
     filteredTrends.sort(sort_by('tweets'))
-    // console.log(filteredTrends)
-    res.send(filteredTrends)
+    // cut array down to top 8
+    let top8Trends = filteredTrends.slice(0, 8)
+    res.send(top8Trends)
   }
 })
 
