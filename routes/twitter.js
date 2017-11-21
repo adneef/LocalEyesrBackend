@@ -138,4 +138,29 @@ router.get('/springs', function(req, res, next) {
   }
 })
 
+
+// most recent tweets about boulder
+router.get('/boulder', function(req, res, next) {
+  t.get('search/tweets', { q: 'Boulder, CO', count: 200 }, gotData)
+  // filter data from twitter API call
+  function gotData(err, data, response) {
+    let filteredBoulder = data.statuses.slice(1, 5).map(item => {
+      if (item.entities.hashtags.length === 0) {
+        return {
+          created_at: item.created_at,
+          text: item.text,
+          hashtags: 'none'
+        }
+      }
+      let hashtags = item.entities.hashtags[0].text
+      return {
+        created_at: item.created_at,
+        text: item.text,
+        hashtags: hashtags
+      }
+    })
+    res.send(filteredBoulder)
+  }
+})
+
 module.exports = router;
