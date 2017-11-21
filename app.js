@@ -66,10 +66,7 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 app.get('/auth/google/success', (req, res) => {
   console.log('req.user:', req.user)
   console.log('req.session:', req.session)
-  console.log('req passport: ', req.session.passport);
   res.redirect(`${front}/${req.session.passport.user.id}`)
-  // res.redirect('http://localhost:3000')
-  // res.send(req.session.passport.user)
 })
 
 app.get('/auth/google/failure', (req, res) => {
@@ -79,7 +76,8 @@ app.get('/auth/google/failure', (req, res) => {
 app.get('/auth/logout', (req, res) => {
   console.log('hit the logout route')
   req.logOut()
-  res.send('successfully logged out')
+  res.redirect(`${front}/`)
+  // res.send('successfully logged out')
 })
 
 /*--------------------------- auth routes end -------------------------- */
