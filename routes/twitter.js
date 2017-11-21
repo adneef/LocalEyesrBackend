@@ -13,7 +13,6 @@ const t = new Twit({
 router.get('/trends', function(req, res, next) {
   let filteredTrends = []
 
-
   t.get('trends/place', { id: 2391279, count: 10 }, gotData)
 
   // filter data from twitter API call
@@ -45,10 +44,9 @@ router.get('/trends', function(req, res, next) {
   }
 })
 
+
 // get related hashtags from client search request
 router.get('/related', function(req, res, next) {
-  console.log('hello from related routes');
-  console.log('req from front end: ', req.query.term);
   // console.log('req from related: ', req);
   t.get('search/tweets', { q: `${req.query.term}`, count: 200 }, gotData)
 
@@ -84,12 +82,60 @@ router.get('/related', function(req, res, next) {
             let hashObj = {hash: k, count: hashtagWithCount[k]}
             dataArray.push(hashObj)
           }
-
-    console.log(dataArray);
     res.send(dataArray)
   }
+})
 
 
+// most recent tweets about denver
+router.get('/denver', function(req, res, next) {
+  t.get('search/tweets', { q: 'Denver', count: 200 }, gotData)
+  // filter data from twitter API call
+  function gotData(err, data, response) {
+    let filteredDenver = data.statuses.slice(1, 5).map(item => {
+      if (item.entities.hashtags.length === 0) {
+        return {
+          created_at: item.created_at,
+          text: item.text,
+          hashtags: 'none'
+        }
+      }
+      let hashtags = item.entities.hashtags[0].text
+      return {
+        created_at: item.created_at,
+        text: item.text,
+        hashtags: hashtags
+      }
+    })
+    console.log(filteredDenver);
+    res.send(filteredDenver)
+
+  }
+})
+
+
+// most recent tweets about co spring
+router.get('/springs', function(req, res, next) {
+  t.get('search/tweets', { q: 'Colorado Springs', count: 200 }, gotData)
+  // filter data from twitter API call
+  function gotData(err, data, response) {
+    let filteredSprings = data.statuses.slice(1, 5).map(item => {
+      if (item.entities.hashtags.length === 0) {
+        return {
+          created_at: item.created_at,
+          text: item.text,
+          hashtags: 'none'
+        }
+      }
+      let hashtags = item.entities.hashtags[0].text
+      return {
+        created_at: item.created_at,
+        text: item.text,
+        hashtags: hashtags
+      }
+    })
+    res.send(filteredSprings)
+  }
 })
 
 module.exports = router;
