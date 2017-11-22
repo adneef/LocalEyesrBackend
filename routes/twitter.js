@@ -106,14 +106,9 @@ router.get('/denver', function(req, res, next) {
         hashtags: hashtags
       }
     })
-<<<<<<< HEAD
     // console.log(filteredDenver);
     res.send(filteredDenver)
 
-=======
-    console.log('FILTERED DENVER: ', filteredDenver);
-    return res.send(filteredDenver)
->>>>>>> 3abb4f2d50629c48003b101b0399b29f429cb456
   }
 })
 
