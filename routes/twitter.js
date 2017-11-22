@@ -106,9 +106,7 @@ router.get('/denver', function(req, res, next) {
         hashtags: hashtags
       }
     })
-    // console.log(filteredDenver);
     res.send(filteredDenver)
-
   }
 })
 
