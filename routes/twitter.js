@@ -105,7 +105,6 @@ router.get('/denver', function(req, res, next) {
       }
     })
     res.send(filteredDenver)
-
   }
 })
 
