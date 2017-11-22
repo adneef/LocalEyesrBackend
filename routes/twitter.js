@@ -123,7 +123,6 @@ router.get('/denver', function(req, res, next) {
   }
 })
 
-
 // most recent tweets for top trend
 // router.get('/tweets', function(req, res, next) {
 //   t.get('search/tweets', { q: `${req.query.term}`, count: 5 }, gotData)
