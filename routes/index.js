@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   // res.send([req.user])
   console.log(req.session.passport.user)
   // res.render('http://localhost:3000', req.session.passport.user)
-  res.redirect(`http://localhost:3000/${req.session.passport.user.id}`)
+  res.render('index', {title: 'Prepare to be routed'})
 })
 
 module.exports = router
