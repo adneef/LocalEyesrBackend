@@ -89,7 +89,22 @@ router.get('/denver', function(req, res, next) {
   t.get('search/tweets', { q: 'Denver', count: 5 }, gotData)
   // filter data from twitter API call
   function gotData(err, data, response) {
-    let filteredDenver = data.statuses.slice(1, 5).map(item => {
+    if (data.statuses.length <= 3) {
+      let denverFiller = [ { created_at: 'Wed Nov 22 01:38:10 +0000 2017',
+        text: 'RT @wojespn: Denver Nuggets forward Paul Millsap\'s surgery will be to repair a torn ligament in his left wrist and could sideline him for t…',
+        hashtags: 'none' },
+      { created_at: 'Wed Nov 22 01:38:08 +0000 2017',
+        text: 'RT @wojespn: Denver Nuggets forward Paul Millsap\'s surgery will be to repair a torn ligament in his left wrist and could sideline him for t…',
+        hashtags: 'none' },
+      { created_at: 'Wed Nov 22 01:38:01 +0000 2017',
+        text: 'Denver Nuggets Lose Paul Millsap Indefinitely After Wrist Injury He Suffered in Loss to Lakers https://t.co/9sAkdMwfwX @danfavale',
+        hashtags: 'none' },
+      { created_at: 'Wed Nov 22 01:37:57 +0000 2017',
+        text: '@metaskills Let me know how you like it, I went to the distillery where they bottle it when I was in Denver :)',
+        hashtags: 'none' } ]
+        return res.send(denverFiller)
+    }
+    let filteredDenver = data.statuses.slice(0, 3).map(item => {
       if (item.entities.hashtags.length === 0) {
         return {
           created_at: item.created_at,
@@ -104,36 +119,34 @@ router.get('/denver', function(req, res, next) {
         hashtags: hashtags
       }
     })
-    res.send(filteredDenver)
+    return res.send(filteredDenver)
   }
 })
 
 
 // most recent tweets for top trend
-// router.get('/tweets', function(req, res, next) {
-//   console.log('query term', req.query.term);
-//   t.get('search/tweets', { q: `${req.query.term}`, count: 5 }, gotData)
-//   // filter data from twitter API call
-//   function gotData(err, data, response) {
-//     let filteredTweets = data.statuses.slice(1, 5).map(item => {
-//       if (item.entities.hashtags.length === 0) {
-//         return {
-//           created_at: item.created_at,
-//           text: item.text,
-//           hashtags: 'none'
-//         }
-//       }
-//       let hashtags = item.entities.hashtags[0].text
-//       return {
-//         created_at: item.created_at,
-//         text: item.text,
-//         hashtags: hashtags
-//       }
-//     })
-//     console.log(filteredTweets);
-//     return res.send(filteredTweets)
-//   }
-// })
+router.get('/tweets', function(req, res, next) {
+  t.get('search/tweets', { q: `${req.query.term}`, count: 5 }, gotData)
+  // filter data from twitter API call
+  function gotData(err, data, response) {
+    let filteredTweets = data.statuses.slice(0, 3).map(item => {
+      if (item.entities.hashtags.length === 0) {
+        return {
+          created_at: item.created_at,
+          text: item.text,
+          hashtags: 'none'
+        }
+      }
+      let hashtags = item.entities.hashtags[0].text
+      return {
+        created_at: item.created_at,
+        text: item.text,
+        hashtags: hashtags
+      }
+    })
+    return res.send(filteredTweets)
+  }
+})
 
 
 module.exports = router;
