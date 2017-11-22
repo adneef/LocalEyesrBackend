@@ -38,7 +38,6 @@ router.get('/trends', function(req, res, next) {
     filteredTrends.sort(sort_by('tweets'))
     // cut array down to top 8
     let top8Trends = filteredTrends.slice(0, 8)
-    console.log('TOP 8 TRENDS: ', top8Trends);
     return res.send(top8Trends)
   }
 })
@@ -80,7 +79,6 @@ router.get('/related', function(req, res, next) {
       let hashObj = {hash: k, count: hashtagWithCount[k]}
       dataArray.push(hashObj)
     }
-    console.log('DATA ARRAY : ', dataArray);
     return res.send(dataArray)
   }
 })
@@ -106,63 +104,36 @@ router.get('/denver', function(req, res, next) {
         hashtags: hashtags
       }
     })
-    // console.log(filteredDenver);
     res.send(filteredDenver)
 
   }
 })
 
 
-// most recent tweets about co spring
-router.get('/springs', function(req, res, next) {
-  t.get('search/tweets', { q: 'Colorado Springs', count: 5 }, gotData)
-  // filter data from twitter API call
-  function gotData(err, data, response) {
-    let filteredSprings = data.statuses.slice(1, 5).map(item => {
-      if (item.entities.hashtags.length === 0) {
-        return {
-          created_at: item.created_at,
-          text: item.text,
-          hashtags: 'none'
-        }
-      }
-      let hashtags = item.entities.hashtags[0].text
-      return {
-        created_at: item.created_at,
-        text: item.text,
-        hashtags: hashtags
-      }
-    })
-    console.log('FILTERED SPRINGS:', filteredSprings);
-    return res.send(filteredSprings)
-  }
-})
-
-
 // most recent tweets about boulder
-router.get('/boulder', function(req, res, next) {
-  t.get('search/tweets', { q: 'Boulder, CO', count: 5 }, gotData)
-  // filter data from twitter API call
-  function gotData(err, data, response) {
-    let filteredBoulder = data.statuses.slice(1, 5).map(item => {
-      if (item.entities.hashtags.length === 0) {
-        return {
-          created_at: item.created_at,
-          text: item.text,
-          hashtags: 'none'
-        }
-      }
-      let hashtags = item.entities.hashtags[0].text
-      return {
-        created_at: item.created_at,
-        text: item.text,
-        hashtags: hashtags
-      }
-    })
-    console.log('FILTERED BOULDER: ', filteredBoulder);
-    return res.send(filteredBoulder)
-  }
-})
+// router.get('/boulder', function(req, res, next) {
+//   t.get('search/tweets', { q: 'Boulder, CO', count: 5 }, gotData)
+//   // filter data from twitter API call
+//   function gotData(err, data, response) {
+//     let filteredBoulder = data.statuses.slice(1, 5).map(item => {
+//       if (item.entities.hashtags.length === 0) {
+//         return {
+//           created_at: item.created_at,
+//           text: item.text,
+//           hashtags: 'none'
+//         }
+//       }
+//       let hashtags = item.entities.hashtags[0].text
+//       return {
+//         created_at: item.created_at,
+//         text: item.text,
+//         hashtags: hashtags
+//       }
+//     })
+//     return res.send(filteredBoulder)
+//   }
+// })
+
 
 // most recent tweets for top trend
 // router.get('/tweets', function(req, res, next) {
