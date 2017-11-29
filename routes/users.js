@@ -30,7 +30,7 @@ router.get('/:id', (req, res, next) => {
   knex('users')
   .select('users.id', 'term')
   .where('searches.user_id', id)
-  .orderBy('searches.created_at', 'asc')
+  .orderBy('searches.created_at', 'desc')
   .innerJoin('searches', 'searches.user_id', 'users.id')
   .then((user) => {
     if(!user) {
@@ -78,18 +78,16 @@ router.delete('/', (req, res, next) => {
   .where('term', term)
   .then((row) => {
     if(row !== 1){
-      console.log(row)
-      console.log('bad request in delete while deleting')
       res.sendStatus(400)
       return
     }
     knex('searches')
     .select('term')
-    .orderBy('searches.created_at', 'asc')
+    .orderBy('created_at', 'desc')
     .where('user_id', user_id)
     .then((searches) => {
+      console.log(searches)
       if(!searches) {
-        console.log('bad request in delete while searching')
         res.sendStatus(400)
         return
       }
