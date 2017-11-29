@@ -44,12 +44,16 @@ router.get('/:id', (req, res, next) => {
 // POST a new search term to the db
 router.post('/', (req, res, next) => {
 
-  const { term, id } = req.body
+  let { term, id } = req.body
+  console.log(term)
+  console.log(id)
 
   if(!term || !term.trim()) {
     res.sendStatus(400)
     return
   }
+  term = term.toLowerCase()
+  console.log('term after lowercasing', term)
 
   knex('searches')
   .returning('term')
@@ -60,6 +64,38 @@ router.post('/', (req, res, next) => {
       return
     }
     res.send(newTerm)
+  })
+})
+
+router.delete('/', (req, res, next) => {
+
+  let { term, user_id } = req.body
+
+  term = term.toLowerCase()
+
+  knex('searches')
+  .delete()
+  .where('term', term)
+  .then((row) => {
+    if(row !== 1){
+      console.log(row)
+      console.log('bad request in delete while deleting')
+      res.sendStatus(400)
+      return
+    }
+    knex('searches')
+    .select('term')
+    .orderBy('searches.created_at', 'asc')
+    .where('user_id', user_id)
+    .then((searches) => {
+      if(!searches) {
+        console.log('bad request in delete while searching')
+        res.sendStatus(400)
+        return
+      }
+      res.send(searches)
+      return
+    })
   })
 })
 

@@ -75,7 +75,6 @@ app.get('/auth/logout', (req, res) => {
   req.logOut()
   req.session = null
   res.redirect(`${front}/`)
-  // res.send('successfully logged out')
 })
 
 /*--------------------------- auth routes end -------------------------- */
