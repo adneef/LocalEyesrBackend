@@ -64,17 +64,14 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 }))
 
 app.get('/auth/google/success', (req, res) => {
-  console.log('req.user:', req.user)
-  console.log('req.session:', req.session)
-  res.redirect(`${front}/${req.session.passport.user.id}`)
+  res.redirect(`${front}/${req.session.passport.user}`)
 })
 
 app.get('/auth/google/failure', (req, res) => {
-  res.send("zoinks, failure")
+  res.send("you have an issue")
 })
 
 app.get('/auth/logout', (req, res) => {
-  console.log('hit the logout route')
   req.logOut()
   req.session = null
   res.redirect(`${front}/`)
@@ -85,7 +82,6 @@ app.get('/auth/logout', (req, res) => {
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  console.log('ERROR: ', err);
   const err = new Error('Not Found')
   err.status = 404
   next(err)

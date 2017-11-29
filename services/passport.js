@@ -17,8 +17,9 @@ passport.use(new GoogleStrategy({
   .first()
   .where('google_id', googleId)
   .then((user) => {
-    console.log('User already exists?', user)
-
+    if(user) {
+      dbUser = user.id
+    }
     // if user does not exist, insert them into the database
     if(!user) {
       knex('users')
@@ -29,29 +30,23 @@ passport.use(new GoogleStrategy({
       })
       // then set dbUser equal to that newUser
       .then((newUser) => {
-        dbUser.id = newUser
-        // console.log('New User is:', dbUser)
+        dbUser = newUser[0]
       })
-      // if user does exist, then set dbuser equal to that user
+      .then(() => {
+        return done(null, dbUser)
+      })
     } else {
-      dbUser.id = user.id
-      // console.log('set dbUser to equal existing user,', dbUser.id)
+      return done(null, dbUser)
     }
-  }).then(() => {
-    console.log('\n\nvalue of dbUse just above done in google strategy:', dbUser)
-    return done(null, dbUser)
   })
 }))
 
 // take in whatever was passed into `done` inside the GitHubStrategy config
 passport.serializeUser((user, done) => {
-  console.log("\n\nSerialize User:", user)
-  // when I call `done` _here_, I am passing in the data to be saved to the session
   done(null, user)
 })
 
 passport.deserializeUser((user, done) => {
-  console.log("Deserialize User", user)
   done(null, user)
 })
 
